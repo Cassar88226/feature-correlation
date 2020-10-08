@@ -39,8 +39,9 @@ def plot_results(real, predicted, test):
         mae = ' MAE: %.3f' % mae
         real_df = pd.DataFrame(index=test.index,columns=[test.columns[i]], data=real[:, i])
         predicted_df = pd.DataFrame(index=test.index,columns=[test.columns[i]], data=predicted[:, i])
-        plt.plot(real_df, label='real')
-        plt.plot(predicted_df, color='red', label='prediction')
+        plt.plot(real_df)
+        plt.plot(predicted_df, color='red')
+        plt.legend(['real','prediction'],loc='upper left')
         plt.subplots_adjust(hspace = 0.5)
         # plt.legend(loc="upper right")
         plt.title(test.columns[i] + rmse + mae)

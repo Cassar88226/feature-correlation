@@ -21,7 +21,7 @@ plot_multi_dataframe(data, 0, len(data))
 
 # define parameters
 n_forecast_days = 30
-n_lag_days = 30
+n_lag_days = 10
 
 #creating the train and test set
 #creating the train and test set
@@ -39,12 +39,13 @@ plot_train_test_dataframe(train, test)
 history = train.copy(deep=True)
 predictions = list()
 for time in range(len(test)):
-    model = VAR(train)
+    model = VAR(history)
     model_fit = model.fit(n_lag_days)
 #     yhat = model_fit.forecast(history.values, 1)[0][0]
     yhat = model_fit.forecast(history.values, 1)[0]
     predictions.append(yhat.tolist())
     history = history.append(test[time:time+1])
+    # history.loc[len(history)] = yhat.tolist()
 # y_actual = test.values[:,0]
 y_actual = test.values
 predictions = np.asarray(predictions)
