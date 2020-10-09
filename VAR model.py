@@ -3,25 +3,22 @@ import numpy as np
 import xlrd
 from matplotlib import pyplot as plt
 from statsmodels.tsa.api import VAR
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
 from utils import *
 
 #read the data
-df = pd.read_excel("Data Inputs.xlsx", skiprows=1)
-df.head()
+file = "Data Inputs.xlsx"
+df = read_data(file, 1)
 
 # drop unwanted columns
 data = df.drop(['US', 'SeriesDate'], axis=1)
 data.index = df.SeriesDate
-data.head()
 
 # plot data
 plot_multi_dataframe(data, 0, len(data))
 
 # define parameters
 n_forecast_days = 30
-n_lag_days = 10
+n_lag_days = 2
 
 #creating the train and test set
 #creating the train and test set
@@ -50,4 +47,4 @@ for time in range(len(test)):
 y_actual = test.values
 predictions = np.asarray(predictions)
 
-plot_results(y_actual, predictions, test)
+plot_results('VAR Model', y_actual, predictions, test)
